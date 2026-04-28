@@ -15,3 +15,5 @@ django-mail-templated
 
 black
 flake8
+faker
+django-cors-headers
