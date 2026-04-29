@@ -156,7 +156,7 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         return user_profile
 
 
-class TestSendEmail(generics.GenericAPIView):
+class TestSendEmail(APIView):
 
     def get(self, request):
 
