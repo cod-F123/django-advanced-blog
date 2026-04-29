@@ -51,11 +51,16 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_yasg",
     "mail_templated",
+
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+
+    "corsheaders.middleware.CorsMiddleware",
+
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -129,10 +134,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+# STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "staticfiles",
 ]
-# STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -160,3 +166,30 @@ SWAGGER_USE_COMPAT_RENDERERS = False
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp4dev"
 EMAIL_PORT = 25
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5379",
+]
+
+
+# Celery configs
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+# CELERY_BEAT_SCHEDULE = {
+#     'send_email' : {
+#         'task' : 'accounts.tasks.sendEmail',
+#         'schedule' : 5
+#     }
+# }
+
+
+# Cache configs
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
